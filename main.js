@@ -84,17 +84,27 @@ class Game{
         this.currentrow++
     }
 
-    greenletter(num){
+    greenletter(num, key){
         const letter = this.allletters[this.currentrow][num]
+        const button = this.findbutton(key)
         letter.style.backgroundColor = "green"
+        if(button.classList.contains("partial")) button.classList.remove("partial")
+        if(button.classList.length === 1) button.classList.add("correct")
     }
-    yellowletter(num){
+    yellowletter(num, key){
         const letter = this.allletters[this.currentrow][num]
+        const button = this.findbutton(key)
         letter.style.backgroundColor = "yellow"
+        if(button.classList.length === 1)button.classList.add("partial")
     }
-    grayletter(num){
+    grayletter(num, key){
         const letter = this.allletters[this.currentrow][num]
+        const button = this.findbutton(key)
         letter.style.backgroundColor = "gray"
+        if(button.classList.length === 1)button.classList.add("wrong")
+    }
+    findbutton(letter){
+        return document.querySelector(`[data-letter="${letter}"]`)
     }
 
     checkanswer(){
@@ -130,11 +140,12 @@ class Game{
         // Phase 3: Farben anwenden
         for(let i = 0; i < 5; i++){
             if(results[i] === 'green'){
-                this.greenletter(i)
+                this.greenletter(i, enteredword[i])
+                
             } else if(results[i] === 'yellow'){
-                this.yellowletter(i)
+                this.yellowletter(i, enteredword[i])
             } else {
-                this.grayletter(i)
+                this.grayletter(i, enteredword[i])
             }
         }
     }

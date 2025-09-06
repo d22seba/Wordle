@@ -98,7 +98,7 @@ const gamewords = [
     "ZECHE", "ZEDER", "ZEHEN", "ZEILE", "ZELLE", "ZELTE", "ZENIT", "ZEUGE", "ZICKE", "ZIEGE",
     "ZIELE", "ZINKE", "ZITAT", "ZIVIL", "ZOBEL", "ZUBER", "ZUCHT", "ZUDEM", "ZUGIG", "ZUNFT",
     "ZUNGE", "ZURUF", "ZUTUN", "ZUVOR", "ZUZUG", "ZWANG", "ZWECK", "ZWEIG", "ZWERG", "ZWIRN",
-    "ZWIST"
+    "ZWIST", "AFFEN"
 ];
 const validwords = [
     "GINGE", "AUßER", "FINDE", "HÖHEN", "OSTEN", "WEBER", "HEUTE", "MACHT", "LIEGE", "NEUER",
@@ -289,5 +289,5 @@ const validwords = [
     "WRACK", "WUCHT", "WUNDE", "WURST", "ZANGE", "ZEBRA", "ZECHE", "ZEDER", "ZEHEN", "ZEILE",
     "ZELLE", "ZELTE", "ZENIT", "ZEUGE", "ZICKE", "ZIEGE", "ZIELE", "ZINKE", "ZITAT", "ZIVIL",
     "ZOBEL", "ZUBER", "ZUCHT", "ZUDEM", "ZUGIG", "ZUNFT", "ZUNGE", "ZURUF", "ZUTUN", "ZUVOR",
-    "ZUZUG", "ZWANG", "ZWECK", "ZWEIG", "ZWERG", "ZWIRN", "ZWIST"
+    "ZUZUG", "ZWANG", "ZWECK", "ZWEIG", "ZWERG", "ZWIRN", "ZWIST", "AFFEN"
 ];

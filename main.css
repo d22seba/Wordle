@@ -157,7 +157,7 @@ body{
 }
 
 .letter-indicator.wrong { 
-    border: 3px solid #d32f2f; 
-    background-color: #fce4e4; 
-    color: #b71c1c;
+    border: 3px solid #4b4b4b; 
+    background-color: #6d6d6d; 
+    color: #000000;
 }
