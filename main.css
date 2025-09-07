@@ -43,6 +43,10 @@ body{
     padding: 10px;
 }
 
+#keyboard .key{
+    touch-action: manipulation;
+}
+
 #keyboard{
     width: 30%;
     height: 50%;
