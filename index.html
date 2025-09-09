@@ -75,9 +75,12 @@
     <div class="letter"></div>
     <div class="letter"></div>
     <div class="letter"></div>
-    <div class="letter"></div>
+    <div class="letter"></div> 
+    <button title="add word" id="addword" class="open"></button>
   </div>
 </div>
+
+<div id="popup" class="closed"></div>
 
 <!-- Tastatur Layout -->
 <div class="letter-status-board">
@@ -126,8 +129,11 @@
 
 </div>
 
-<script src="gamewords.js"></script>
-<script src="validwords.js"></script>
+<script src="words/gamewords.json" type="application/json"></script>
+<script src="words/validwords.json" type="application/json"></script>
+<script src="words/gamewords.js"></script>
+<script src="words/validwords.js"></script>
+<script src="firebase.js" type="module"></script>
 <script src="main.js"></script>
 </body>
 </html>

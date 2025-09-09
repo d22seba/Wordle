@@ -9,26 +9,109 @@ class Game{
         this.allrows = []
         this.allletters = []
 
+        let gamerun = true
+        
         console.log("es läuft")
 
-        document.addEventListener("keydown", (event) => this.inputread(event));
+        let toggle = false;
+        let popupbutton = document.getElementById("addword")
+        popupbutton.addEventListener("click", ()=>{
+            const popup = document.getElementById("popup");
+            
+            if(toggle){
+                gamerun = true;
+                popup.className = "closed"
+                popupbutton.classList.remove("rotated")
+                toggle = false;
+            } else {
+                gamerun = false;
+                popup.className = "open"
+                popupbutton.classList.add("rotated")
+                popup.innerHTML = `
+                <div class="popup-content">
+                <h3>Füge ein fehlendes Wort hinzu</h3>
+                <div>    
+                <div id="loaderarea"></div>
+                <input type="text" id="new-word" maxlength="5">
+                <div class="notready" id="sendbutton">
+                <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#000000ff"><path d="M113.86-153.62v-652.76L887.97-480 113.86-153.62Zm72.81-111.33L699.92-480 186.67-697.05v152.77L430.95-480l-244.28 62.95v152.1Zm0 0v-432.1 432.1Z"/></svg>
+                </div>
+                </div>
+                <div id="result"></div>
+                </div>
+                `;
+                toggle = true;
+                let input = document.getElementById("new-word")
+                document.getElementById("sendbutton").addEventListener("click",async ()=>{
+                    let area = document.getElementById("loaderarea")
+                    let eintrag = input.value
+                    input.value = ""
 
+                    if(validwords.includes(eintrag.toUpperCase())){
+                        document.getElementById("result").innerHTML = `"${eintrag}" existiert schon im Spiel`;
+                        return;
+                    }
 
+                    area.innerHTML = `<span class="loader"></span>`
+                    await this.checkword(eintrag)
+                    area.innerHTML = ""
+                })
+                input.addEventListener("keydown",(event)=>{
+                    const key = event.key
+                    const button = document.getElementById("sendbutton")
+                    const list = ["ö","ä","ü","ß"]
+                    if(list.includes(key)) event.preventDefault()
+                    setTimeout(() => {
+                        if(input.value.length == 5) button.className = "ready"
+                        else button.className = "notready"
+                    }, 0);
+                })
+            }
+        })
+
+        document.addEventListener("keydown", (event) => {
+            if(gamerun) this.inputread(event)
+            });
+        
         document.querySelectorAll(".letter-indicator").forEach(button=>{
             button.addEventListener("click", () =>{
-                this.inputadd(button.dataset.letter)
-            })
+                if(gamerun) this.inputadd(button.dataset.letter)
+                })
         })
-
+        
         document.getElementById("backspace-key").addEventListener("click", () =>{
-            this.inputdelte()
-        })
-
+            if(gamerun) this.inputdelte()
+            })
+        
         document.getElementById("enter-key").addEventListener("click", ()=>{
-            this.inputsubmit()
-        })
+            if(gamerun) this.inputsubmit()
+            })
     }
 
+    async checkword(word){
+        let url = `https://de.wiktionary.org/w/api.php?action=query&titles=${encodeURIComponent(word)}&format=json&origin=*`;
+        const result = document.getElementById("result")
+
+        try {
+            let res = await fetch(url);
+            let data = await res.json();
+
+            await new Promise(async resolve=>{  // ← async hinzufügen
+                setTimeout(() => {  // ← async hinzufügen
+                    if (data.query.pages["-1"]) {
+                        result.textContent = `"${word}" wurde nicht als deutsches Wort erkannt ❌`
+                    } else {
+                        result.textContent = `"${word}" erkannt und bald im Spiel ✅`;
+                        window.sendword(word.toUpperCase());
+                    }
+                    resolve()
+                }, 1500);
+            })
+
+        } catch (err) {
+        }
+    }
+    
     scanrows(){
         const rows = document.querySelectorAll(".word-row")
         rows.forEach((row, rownum)=>{
