@@ -233,9 +233,20 @@ class Game{
         }
     }
 }
-const game = new Game();
+let gameword
 
-let randomnum = Math.floor(Math.random() * gamewords.length)
-const gameword = gamewords[randomnum]
-
-game.scanrows()
+// Warten bis Listen geladen sind, dann Spiel starten
+window.addEventListener("DOMContentLoaded", () => {
+    const checkAndStart = () => {
+        if (typeof gamewords !== 'undefined' && gamewords.length > 0 && 
+            typeof validwords !== 'undefined' && validwords.length > 0) {
+            const game = new Game();
+            let randomnum = Math.floor(Math.random() * gamewords.length)
+            gameword = gamewords[randomnum]
+            game.scanrows()
+        } else {
+            setTimeout(checkAndStart, 100);
+        }
+    };
+    checkAndStart();
+});
